@@ -31,6 +31,7 @@
           <input id="ascending" name="filter" type="radio" v-on:Click="ascending"> <label for="ascending">Ascending</label>
           <input id="descending" name="filter" type="radio" v-on:Click="descending"> <label for="descending">Descending</label>
         </div>
+        <h1 class="text-center font-semibold  text-5xl p-3"> Activites</h1>
           <div class="grid grid-flow-row grid-cols-4 gap-6" >
           <div v-for="lesson in getfilteredSearch" class="group relative">           
             <div class=" shadow-xl border-1 border-gray-300 w-70 rounded-md m-2 font-semibold">
@@ -46,23 +47,14 @@
             <button class="bg-green-700 text-white rounded-b-md font-semibold p-3 bg-opacity-75 w-full text-center" v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">
               Add to Cart
             </button>
-            <button class="bg-gray-200 text-gray-600  rounded-b-md font-semibold p-3 bg-opacity-75 w-full text-center" disabled="disabled" v-else>Add to Cart</button>
-            <!-- <span v-if="lesson.spaces - cartCount(lesson) == 0">
-              All out!</span
-            >  -->
-            <!-- <span v-else-if="lesson.spaces - cartCount(lesson) < 5">
-              Only {{lesson.spaces - cartCount(lesson)}} left!
-            </span>
-            <span v-else>Buy Now!</span> -->
-            <!-- </div> -->
-           
+            <button class="bg-gray-200 text-gray-600  rounded-b-md font-semibold p-3 bg-opacity-75 w-full text-center" disabled="disabled" v-else>Add to Cart</button>           
           </div>
           </div>
         </div>
         </div>
    
        <div v-else>
-          <h2>Checkout</h2>
+          <h1> Cart</h1>
           <div class="grid grid-flow-row grid-cols-4 gap-6" >
           <div v-for="(lesson, index) in cart" :key="lesson.id" class="group relative">           
             <figure>
