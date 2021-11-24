@@ -11,7 +11,7 @@
     <div id="app">
       <header  class="p-4 flex w-full bg-blue-900 text-white font-semibold justify-between ">
         <h1 v-text="sitename"></h1> 
-        <button v-on:click="showCheckout" class="bg-green-700 w-40 font-semibold h-10 p-2 rounded-lg" v-if="cartItemCount > 0 && showCheckout">
+        <button v-on:click="showCheckout" class="bg-green-700 w-40 font-semibold h-10 p-2 rounded-lg" v-if="cartItemCount > 0 ">
           {{cartItemCount}}
           <span class="fas fa-cart-plus"></span>
           View Cart
@@ -101,8 +101,9 @@
           showCheckout() {
             this.showLesson = this.showLesson ? false : true;
           },
+          // changed showLesson to true, used in disabled button Cart to go back to lessons list 
           showBackLesson() {
-            this.showLesson = false;
+            this.showLesson = true;
           },
           submitForm() {
             alert("Order Submitted");
