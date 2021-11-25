@@ -40,7 +40,7 @@
             <h2 class="pl-2">Subject: {{lesson.subject}}</h2>
             <p class="pl-2">Location: {{lesson.location}}</p>
             <p class="pl-2">Price: {{lesson.price}}</p>
-            <p class="pl-2">Spaces: {{lesson.spaces - cartItemCount}}</p>
+            <p class="pl-2">Spaces: {{lesson.spaces - cartCount(lesson)}}</p>
             <p>
               <span class="pl-2" v-for="n in lesson.rating">★</span>
               <span class="pl-2" v-for="n in 5-lesson.rating">☆</span>
@@ -61,9 +61,9 @@
             <figure>
               <img class="bg-gray-200" v-bind:src="lesson.image" />
             </figure>
-            <h2 class="pl-2" v-text="lesson.subject"></h2>
-            <p class="pl-2" v-text="lesson.location"></p>
-            <p class="pl-2" v-text="lesson.price"></p>
+            <h2 class="pl-2">Subject: {{lesson.subject}}</h2>
+            <p class="pl-2">Location: {{lesson.location}}</p>
+            <p class="pl-2">Price: {{lesson.price}}</p>
             <button class="bg-green-700 text-white rounded-b-md font-semibold p-3 bg-opacity-75 w-full text-center" v-on:click="removeFromCart(index, lesson)">
              Remove from Cart
             </button>
