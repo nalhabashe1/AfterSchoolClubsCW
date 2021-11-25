@@ -21,9 +21,10 @@
     
       <main>    
         <div v-if="showLesson">
-          <div class="container bg-indigo-200 h-auto p-2 mx-20 ml-20 ">
+          <div class="container h-auto p-2 content-center ">
             <!-- <label>Search: </label> -->
-          <input class="flex-grow px-4 rounded-l-full rounded-r-full text-sm  focus:outline" type="search" v-model="search" placeholder="Search"/>
+          <input class="flex-grow px-4 rounded-l-full p-2 border-1 border-gray-300 rounded-r-full text-sm focus:outline" class="fas fa-search" type="search" v-model="search" placeholder="Search"/>
+          <input id="sortSubject" name="filter" type="radio" v-on:Click="sortSubject"> <label for="sortSubject">Subject</label>
           <input id="sortLocation" name="filter" type="radio" v-on:Click="sortLocation"> <label for="sortLocation">Location</label>
           <input id="sortAvailability" name="filter" type="radio" v-on:Click="sortAvailability"> <label for="sortAvailability">Availability</label>
           <input id="sortLowestPrice" name="filter" type="radio" v-on:Click="sortLowestPrice"/> <label for="sortLowestPrice">Low Price</label>
@@ -39,7 +40,7 @@
             <h2 class="pl-2">Subject: {{lesson.subject}}</h2>
             <p class="pl-2">Location: {{lesson.location}}</p>
             <p class="pl-2">Price: {{lesson.price}}</p>
-            <p class="pl-2">Spaces: {{lesson.spaces - cartCount(lesson)}}</p>
+            <p class="pl-2">Spaces: {{lesson.spaces - cartItemCount}}</p>
             <p>
               <span class="pl-2" v-for="n in lesson.rating">★</span>
               <span class="pl-2" v-for="n in 5-lesson.rating">☆</span>
@@ -53,26 +54,25 @@
         </div>
         </div>
    
-       <div v-else>
-        <h1 class="text-center font-semibold text-5xl p-3"> Cart </h1>
-        <div class="grid grid-flow-row grid-cols-4 gap-6 inline-flex"  >
-          <div class="shadow-xl border-1 border-gray-300 w-70 rounded-md m-2 font-semibold">
-            <div class="group relative">
-          <div v-for="(lesson, index) in cart" class="group relative">           
+        <div v-else>
+          <h1 class="text-center font-semibold text-5xl p-3"> Cart </h1>
+          <div class="grid grid-flow-row grid-cols-4 gap-6 p-5" >    
+          <div v-for="(lesson, index) in cart" :key="lesson.id" class="group relative border-gray-300 shadow-xl border-1 border-gray-300 w-70 rounded-md m-2 font-semibold ">           
             <figure>
-              <img  class="w-50 h-50 object-center bg-gray-200 hover:bg-gray-100 " v-bind:src="lesson.image" />
+              <img class="bg-gray-200" v-bind:src="lesson.image" />
             </figure>
-            <h2 class="pl-2"> Subject: {{lesson.subject}}</h2>
-            <p class="pl-2"> Location: {{lesson.location}}</p>
-            <p class="pl-2"> Price: {{lesson.price}}</p>
+            <h2 class="pl-2" v-text="lesson.subject"></h2>
+            <p class="pl-2" v-text="lesson.location"></p>
+            <p class="pl-2" v-text="lesson.price"></p>
             <button class="bg-green-700 text-white rounded-b-md font-semibold p-3 bg-opacity-75 w-full text-center" v-on:click="removeFromCart(index, lesson)">
              Remove from Cart
             </button>
           </div>
-          </div>
-          </div>
         </div>
-        </div>
+<div class="container bg-blue-900 w-60 h-40 ">
+<h1>Checkout</h1>
+</div>
+       </div>
       </main>
     </div>
 
@@ -112,12 +112,16 @@
           // cartCount -- it will check the id if its valid it will increment runs each time 
           cartCount(lesson){
             let count =0;
+            let total =0;
             for(let i =0; i < this.cart.length; i++){
               if(this.cart[i] === lesson ){
-                // count++
+                total = total + lesson.price
               }
             }
             return count;
+          },
+          sortSubject(){
+            this.lessons.sort((a, b) => (a.subject > b.subject) ? 1 : -1);
           },
           sortLowestPrice(){
             this.lessons.sort((a, b) => a.price > b.price ? 1 : -1);
