@@ -32,14 +32,14 @@
           <input id="ascending" name="filter" type="radio" v-on:Click="ascending"> <label for="ascending">Ascending</label>
           <input id="descending" name="filter" type="radio" v-on:Click="descending"> <label for="descending">Descending</label>
         </div>
-        <h1 class="text-center font-semibold  text-5xl p-3"> Activites</h1>
+        <h1 class="text-center font-semibold  text-4xl p-3"> Activites</h1>
           <div class="grid grid-flow-row grid-cols-4 gap-6" >
           <div v-for="lesson in getfilteredSearch" class="group relative">           
             <div class=" shadow-xl border-1 border-gray-300 w-70 rounded-md m-2 font-semibold">
               <img class="w-50 h-50 object-center bg-gray-200 hover:bg-gray-100 " v-bind:src="lesson.image" />
             <h2 class="pl-2">Subject: {{lesson.subject}}</h2>
             <p class="pl-2">Location: {{lesson.location}}</p>
-            <p class="pl-2">Price: {{lesson.price}}</p>
+            <p class="pl-2">Price: {{lesson.price}}$</p>
             <p class="pl-2">Spaces: {{lesson.spaces - cartCount(lesson)}}</p>
             <p>
               <span class="pl-2" v-for="n in lesson.rating">★</span>
@@ -63,7 +63,7 @@
             </figure>
             <h2 class="pl-2">Subject: {{lesson.subject}}</h2>
             <p class="pl-2">Location: {{lesson.location}}</p>
-            <p class="pl-2">Price: {{lesson.price}}</p>
+            <p class="pl-2">Price: {{lesson.price}}$</p>
             <button class="bg-green-700 text-white rounded-b-md font-semibold p-3 bg-opacity-75 w-full text-center" v-on:click="removeFromCart(index, lesson)">
              Remove from Cart
             </button>
