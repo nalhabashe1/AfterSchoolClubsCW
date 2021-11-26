@@ -57,7 +57,7 @@
         <div v-else>
           <h1 class="text-center font-semibold text-5xl p-3"> Cart </h1>
           <div class="grid grid-flow-row grid-cols-4 gap-6 p-5" >    
-          <div v-for="(lesson, index) in cart" :key="lesson.id" class="group relative border-gray-300 shadow-xl border-1 border-gray-300 w-70 rounded-md m-2 font-semibold ">           
+          <div v-for="(lesson, index) in cart" class="group relative border-gray-300 shadow-xl border-1 border-gray-300 w-70 rounded-md m-2 font-semibold ">           
             <figure>
               <img class="bg-gray-200" v-bind:src="lesson.image" />
             </figure>
@@ -69,13 +69,13 @@
             </button>
           </div>
         </div>
-    <div class="container mx-auto px-5 bg-gray-200 border-gray-300 border-1 shadow-xl rounded-md p-4 content-center">
+    <div class="container mt-50 mx-auto px-5 bg-gray-200 border-gray-300 border-1 shadow-xl rounded-md p-4 content-center">
        <p>
-      <h1 class="font-semibold text-5xl text-center">Checkout</h1>
+      <h1 class="font-semibold text-3xl text-center">Checkout</h1>
       <form
-      @submit="checkForm"
+      @submit.prevent="checkForm"
       method="post"
-    ><p v-if="errors.length">
+    ><p class="p-3 bg-red-300 rounded-md shadow-xl" v-if="errors.length">
       <b>Please Enter the following required fields:</b>
       <ul>
         <li v-for="error in errors">{{ error }}</li>
@@ -83,13 +83,12 @@
     </p>
       <strong>Name: </strong> <input placeholder="Enter Name" v-model="name"/>
       <strong>Phone: </strong> <input placeholder="Enter Phone Number" v-model="phoneNumber" >
-      <button class="bg-gray-200 text-gray-600 rounded-md font-semibold p-1 text-center" v-if="errors.length > 0">
+      <button class="bg-gray-200 text-gray-600 rounded-md font-semibold p-1 px-2 text-center" v-if="!valid">
        Checkout
       </button>
-      <button class="bg-green-700 text-white rounded--md font-semibold p-3 text-center" v-else v-on:click="submitForm">Checkout</button>     
+      <button class="bg-green-700 text-white rounded-md font-semibold p-1 px-2 text-center" v-else-if="valid" type="submit" v-on:click="submitForm">Checkout</button>     
       </form>
     </p>      
-   
       </div>
        </div>
       </main>
@@ -99,23 +98,26 @@
       var webstore = new Vue({
         el: "#app",
         data: {
+          valid: false,
           sitename: "Hamilton - After School Clubs",
           lessons: lessons,
+          total: 0,
           cart: [],
           search: '',
           showLesson: true,
-          showCart: true,
           order: {
             name: "",
             phone: "",
           },
           errors: [],
           name: null,
-          phoneNumber: null
+          phoneNumber: null,
         },
         methods: {
           addToCart(lesson) {
+            let total= 0;
             this.cart.push(lesson);
+            total = total + lesson.price;
             lesson.spaces--;
           },
           removeFromCart(index, lesson){
@@ -130,7 +132,7 @@
             this.showLesson = true;
           },
           submitForm() {
-            alert("Order Submitted");
+            alert("Order Submitted by" + this.name);
           },
           canAddToCart(lesson) {
             return lesson.spaces > this.cartCount(lesson);
@@ -138,10 +140,9 @@
           // cartCount -- it will check the id if its valid it will increment runs each time 
           cartCount(lesson){
             let count =0;
-            let total =0;
             for(let i =0; i < this.cart.length; i++){
               if(this.cart[i] === lesson ){
-                total = total + lesson.price
+                
               }
             }
             return count;
@@ -170,33 +171,39 @@
           sortHighRating(){
           this.lessons.sort((a, b) => (a.rating < b.rating) ? 1 : -1);
           },
-          // descending(){
-          // this.lessons.sort((a, b) => (a.subject < b.subject) ? 1 : -1);
-          // }
+
           checkForm: function (e) {
           const regexString = /^[a-zA-z]+$/;
           const regexInt = /^[1-9]+$/;
+          this.errors = [];
 
-            this.errors = [];
+          if (!this.name) {
+            this.errors.push('Name is required.');
+            this.valid = false;
+          }
+          else if(!this.name.match(regexString)){
+              this.errors.push('Name should be letters.');
+              this.valid = false;
+          }
+          if(!this.phoneNumber) {
+             this.errors.push('Phone Number is required.');
+             this.valid = false;
+          }
+          else if(!this.phoneNumber.match(regexInt)){
+            this.errors.push('Phone Number should be numbers.');
+            this.valid = false;
+            console.log("error"+ this.valid);
+          }
 
-            if (!this.name) {
-            this.errors.push('Name required.');
-            }
-            else if(!this.name.match(regexString)){
-              this.errors.push('Name is should letters.');
-            }
-            if(!this.phoneNumber) {
-             this.errors.push('Phone Number required.');
-           }
-           else if(!this.phoneNumber.match(regexInt)){
-            this.errors.push('Phone Number should number.');
-           }
-           if (this.name == " " && this.name.match(regexString) && this.phoneNumber == " "&& this.phoneNumber.match(regexInt)) {
-           return true;
-           }
+          if(this.name.match(regexString) && this.phoneNumber.match(regexInt)) {
+          this.valid = true;
+          console.log("no errors"+ this.valid);
+          
+          return true;
+
+          }
           e.preventDefault();
-    }
-  
+    },
         },
         computed: {
           cartItemCount() {
