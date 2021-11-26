@@ -184,15 +184,15 @@
             this.valid = false;
           }
           else if(!this.name.match(regexString)){
-              this.errors.push('Name should be letters.');
+              this.errors.push('Name should be in letters.');
               this.valid = false;
           }
           if(!this.phoneNumber) {
-             this.errors.push('Phone Number is required.');
+             this.errors.push('Phone is required.');
              this.valid = false;
           }
           else if(!this.phoneNumber.match(regexInt)){
-            this.errors.push('Phone Number should be numbers.');
+            this.errors.push('Phone should be in numbers.');
             this.valid = false;
             console.log("error"+ this.valid);
           }
