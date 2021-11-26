@@ -69,9 +69,28 @@
             </button>
           </div>
         </div>
-<div class="container bg-blue-900 w-60 h-40 ">
-<h1>Checkout</h1>
-</div>
+    <div class="container mx-auto px-5 bg-gray-200 border-gray-300 border-1 shadow-xl rounded-md p-4 content-center">
+       <p>
+      <h1 class="font-semibold text-5xl text-center">Checkout</h1>
+      <form
+      @submit="checkForm"
+      method="post"
+    ><p v-if="errors.length">
+      <b>Please Enter the following required fields:</b>
+      <ul>
+        <li v-for="error in errors">{{ error }}</li>
+      </ul>
+    </p>
+      <strong>Name: </strong> <input placeholder="Enter Name" v-model="name"/>
+      <strong>Phone: </strong> <input placeholder="Enter Phone Number" v-model="phoneNumber" >
+      <button class="bg-gray-200 text-gray-600 rounded-md font-semibold p-1 text-center" v-if="errors.length > 0">
+       Checkout
+      </button>
+      <button class="bg-green-700 text-white rounded--md font-semibold p-3 text-center" v-else v-on:click="submitForm">Checkout</button>     
+      </form>
+    </p>      
+   
+      </div>
        </div>
       </main>
     </div>
@@ -85,7 +104,14 @@
           cart: [],
           search: '',
           showLesson: true,
-          showCart: true
+          showCart: true,
+          order: {
+            name: "",
+            phone: "",
+          },
+          errors: [],
+          name: null,
+          phoneNumber: null
         },
         methods: {
           addToCart(lesson) {
@@ -147,6 +173,30 @@
           // descending(){
           // this.lessons.sort((a, b) => (a.subject < b.subject) ? 1 : -1);
           // }
+          checkForm: function (e) {
+          const regexString = /^[a-zA-z]+$/;
+          const regexInt = /^[1-9]+$/;
+
+            this.errors = [];
+
+            if (!this.name) {
+            this.errors.push('Name required.');
+            }
+            else if(!this.name.match(regexString)){
+              this.errors.push('Name is should letters.');
+            }
+            if(!this.phoneNumber) {
+             this.errors.push('Phone Number required.');
+           }
+           else if(!this.phoneNumber.match(regexInt)){
+            this.errors.push('Phone Number should number.');
+           }
+           if (this.name == " " && this.name.match(regexString) && this.phoneNumber == " "&& this.phoneNumber.match(regexInt)) {
+           return true;
+           }
+          e.preventDefault();
+    }
+  
         },
         computed: {
           cartItemCount() {
