@@ -98,7 +98,6 @@
       var webstore = new Vue({
         el: "#app",
         data: {
-          valid: false,
           sitename: "Hamilton - After School Clubs",
           lessons: lessons,
           total: 0,
@@ -112,6 +111,7 @@
           errors: [],
           name: null,
           phoneNumber: null,
+          valid: false,
         },
         methods: {
           addToCart(lesson) {
@@ -132,7 +132,7 @@
             this.showLesson = true;
           },
           submitForm() {
-            alert("Order Submitted by" + this.name);
+            alert("The Order has been submitted by name: " + this.name + " phone: " + this.phone);
           },
           canAddToCart(lesson) {
             return lesson.spaces > this.cartCount(lesson);
@@ -194,13 +194,10 @@
             this.valid = false;
             console.log("error"+ this.valid);
           }
-
           if(this.name.match(regexString) && this.phoneNumber.match(regexInt)) {
           this.valid = true;
-          console.log("no errors"+ this.valid);
-          
+          //console.log("no errors"+ this.valid);
           return true;
-
           }
           e.preventDefault();
     },
