@@ -69,20 +69,20 @@
             </button>
           </div>
         </div>
-    <div class="container mt-50 mx-auto px-5 bg-gray-200 border-gray-300 border-1 shadow-xl rounded-md p-4 content-center">
+    <div class="container mx-auto px-5 bg-gray-200 border-gray-300 border-1 shadow-xl rounded-md p-4">
        <p>
-      <h1 class="font-semibold text-3xl text-center">Checkout</h1>
+      <h1 class="font-semibold text-3xl p-3">Checkout</h1>
       <form
       @submit.prevent="checkForm"
       method="post"
-    ><p class="p-3 bg-red-300 rounded-md shadow-xl" v-if="errors.length">
-      <b>Please Enter the following required fields:</b>
+    ><p class="bg-red-300 w-auto rounded-md shadow-xl p-2" v-if="errors.length">
+      <b>Please enter the following required fields:</b>
       <ul>
         <li v-for="error in errors">{{ error }}</li>
       </ul>
     </p>
-      <strong>Name: </strong> <input placeholder="Enter Name" v-model="name"/>
-      <strong>Phone: </strong> <input placeholder="Enter Phone Number" v-model="phoneNumber" >
+      <strong>Name: </strong> <input class="rounded-md"placeholder="Enter Name" v-model="name"/>
+      <strong>Phone: </strong> <input class="rounded-md" placeholder="Enter Phone Number" v-model="phoneNumber" >
       <button class="bg-gray-200 text-gray-600 rounded-md font-semibold p-1 px-2 text-center" v-if="!valid">
        Checkout
       </button>
@@ -92,6 +92,7 @@
       </div>
        </div>
       </main>
+     
     </div>
 
     <script type="text/javascript">
@@ -132,7 +133,7 @@
             this.showLesson = true;
           },
           submitForm() {
-            alert("The Order has been submitted by name: " + this.name + " phone: " + this.phone);
+            alert("The Order has been submitted by name: " + this.name + " phone: " + this.phoneNumber);
           },
           canAddToCart(lesson) {
             return lesson.spaces > this.cartCount(lesson);
